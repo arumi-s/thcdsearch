@@ -1,0 +1,494 @@
+@charset "utf-8";
+
+.greyscale {
+    -webkit-filter: grayscale(100%);
+    -moz-filter: grayscale(100%);
+    -ms-filter: grayscale(100%);
+    -o-filter: grayscale(100%);
+    filter: grayscale(100%);
+    filter: gray;
+}
+div.SugContainer {
+    position: absolute;
+    z-index: 20;
+    margin-top: -3px;
+    background-color: #E5EBEE;
+    border: 1px solid grey;
+    padding: 0px 2px;
+    width: 150px;
+    max-height: 250px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    white-space: nowrap;
+    display: none;
+}
+div.SugContainer > div > div {
+    height: 18px;
+    background-color: #fff;
+}
+div.SugContainer > div > div:hover {
+    background-color: transparent;
+}
+div.SugContainer > div > div:hover span {
+    color: #E42727;
+    font-weight: bold;
+}
+.SugLoading {
+    background-image: url( http://thwiki.cc/extensions/WikiEditor/modules/images/dialogs/loading.gif );
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: 100%;
+}
+.SugNone {
+    text-align: center;
+    color: #aaa;
+}
+#PageNumber {
+    font-weight: bold;
+    position: relative;
+    top: 25%;
+}
+#PrevPage {
+    float: left;
+    height: 32px;
+}
+#NextPage {
+    float: right;
+    height: 32px;
+}
+#NoResult {
+    text-align: center;
+    background-color: #E5EBEE;
+    height: 32px;
+    margin-top: 10px;
+    padding: 10px;
+    background-image: url( http://thwiki.cc/logo.png );
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+#NoResult:before {
+    font-weight: bold;
+    content: '没有符合要求的结果';
+    display: block;
+}
+#OptFrame {
+    position: relative;
+    min-width: 560px;
+    width: 100%;
+    background-color: #E5EBEE;
+}
+#OptTitle, #MenuTitle {
+    padding: 6px;
+    background-color: #C2D8E2;
+    font-weight: bold;
+    text-align: center;
+    min-width: 560px;
+    color: #423D58;
+    font-size: 100%;
+    margin-top: 6px;
+}
+#OptTitle.Folded, #MenuTitle.Folded {
+}
+#MenuContent {
+    background-color: #E5EBEE;
+    text-align: center;
+    padding: 6px 20px;
+    min-width: 560px;
+    display: none;
+}
+#OptBtns {
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    height: 100%;
+    z-index: 30;
+    background-color: #E5EBEE;
+    border-left: 5px solid #C2D8E2;
+}
+#MenuContent>ul {
+    text-align: left;
+    padding-left: 20px;
+}
+#MenuContent>div {
+    border-bottom-width: 2px;
+    border-bottom-style: solid;
+    margin: 0px 10px;
+    padding-bottom: 2px;
+    font-weight: bold;
+}
+ol[id^="OptPage-"] {
+    list-style-type: none;
+    background-color: #E5EBEE !important;
+    border-color: #C2D8E2;
+    min-width: 300px;
+    height: 360px;
+    padding: 5px 10px;
+    margin: 0px;
+    overflow-y: auto;
+    display: none;
+    position: relative;
+    z-index: 40;
+}
+ol[id^="OptPage-"] li {
+    margin: 0px 15px 0px 30px;
+    padding: 3px 15px;
+    border-top-width: 1px;
+    border-top-style: solid;
+    border-color: inherit;
+}
+.OptPageSelected {
+    display: block !important;
+}
+li.OptSelected {
+    list-style-type: decimal;
+}
+li.OptClass-publisher::before {
+    content: '社团信息　';
+}
+li.OptClass-release::before {
+    content: '发布信息　';
+}
+li.OptClass-content::before {
+    content: '内容信息　';
+}
+li.OptClass-music::before {
+    content: '音乐信息　';
+}
+li.OptClass-staff::before {
+    content: '人员信息　';
+}
+li.OptClass-remove {
+    border-top: 0px;
+    padding: 5px 15px;
+}
+#OptInputs {
+    min-width: 560px;
+    min-height: 420px;
+    max-height: 600px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
+#OptInputs::-webkit-scrollbar { 
+    display: none;
+}
+.OptInput {
+    padding: 4px 0px;
+    margin: 4px 0px;
+    width: 100%;
+    border-spacing: 0px;
+    table-layout: fixed;
+    overflow-wrap: break-word;
+    display: none;
+    position: relative;
+    height: 90px;
+}
+.OptInput::after {
+	content: "";
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0px;
+	pointer-events: none;
+	background: -moz-linear-gradient(top, rgba(246,248,249,0.1) 0%, rgba(229,235,238,0.3) 50%, rgba(215,222,227,0.3) 51%, rgba(245,247,249,0.1) 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(246,248,249,0.1)), color-stop(50%,rgba(229,235,238,0.3)), color-stop(51%,rgba(215,222,227,0.3)), color-stop(100%,rgba(245,247,249,0.1)));
+	background: -webkit-linear-gradient(top, rgba(246,248,249,0.1) 0%,rgba(229,235,238,0.3) 50%,rgba(215,222,227,0.3) 51%,rgba(245,247,249,0.1) 100%);
+	background: -o-linear-gradient(top, rgba(246,248,249,0.1) 0%,rgba(229,235,238,0.3) 50%,rgba(215,222,227,0.3) 51%,rgba(245,247,249,0.1) 100%);
+	background: -ms-linear-gradient(top, rgba(246,248,249,0.1) 0%,rgba(229,235,238,0.3) 50%,rgba(215,222,227,0.3) 51%,rgba(245,247,249,0.1) 100%);
+	background: linear-gradient(to bottom, rgba(246,248,249,0.1) 0%,rgba(229,235,238,0.3) 50%,rgba(215,222,227,0.3) 51%,rgba(245,247,249,0.1) 100%);
+}
+.OptInput tbody, .OptInput tr {
+    border-color: inherit;
+}
+.OptInput th {
+    width: 100px;
+    border-right: 2px solid;
+    border-color: inherit;
+    vertical-align: middle;
+}
+.OptInput td[id] {
+    vertical-align: bottom;
+}
+.OptInput td {
+    padding: 3px 12px;
+}
+.OptInput td:nth-child(3), .OptInput td:nth-child(4) {
+    width: 30px;
+    margin-right: 4px;
+    font-weight: bold;
+    vertical-align: middle;
+    padding: 5px 2px;
+    text-align: center;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.OptInput td:nth-child(3) {
+    background-color: #B7B7B7;
+    color: #E5EBEE;
+    background-image: url( http://upload.wikimedia.org/wikipedia/commons/2/2f/Clear_icon.svg );
+    background-size: 30px;
+}
+.OptInput td:nth-child(4) {
+    background-color: #D2EADA;
+    color: #508256;
+    background-image: url( http://upload.wikimedia.org/wikipedia/commons/c/c1/Gtk-refresh.svg );
+    background-size: 24px;
+}
+.OptInput td:nth-child(3):hover{
+    background-color: #7B7B7B;
+}
+.OptInput td:nth-child(4):hover{
+    background-color: #96D0A9;
+}
+.OptInput div.sizer {
+    display: none;
+    white-space: nowrap;
+}
+input.wide {
+    width: 100%;
+    margin: 1px 0px;
+}
+.OptInput select {
+    border-width: 1px;
+    border-style: solid;
+    vertical-align: baseline;
+    margin: 1px 2px;
+    padding: 0px 6px 1px 0px;
+}
+.OptInput button {
+    border-width: 1px;
+    border-style: solid;
+    margin: 1px 2px;
+    padding: 0px 6px 1px 6px;
+}
+.OptInput button:hover {
+    color: #E5EBEE;
+}
+#OptSubmit {
+    padding: 6px 0px;
+    background-color: #C2D8E2;
+    text-align: center;
+    min-width: 560px;
+    font-size: 100%;
+}
+#OptSubmit input {
+    padding: 2px 10px;
+    margin-left: 20px;
+    border-width: 0px;
+    background-color: #E5EBEE;
+}
+#OptSubmit select {
+    border-width: 0px;
+    border-style: solid;
+    vertical-align: baseline;
+    background-color: #E5EBEE;
+}
+#OptLimit {
+    float: right;
+    padding: 0px 20px;
+}
+table.OptSelected {
+    display: table;
+}
+#SearchResult span.smw-highlighter {
+    display: none;
+}
+#SearchResult {
+    width: 100%;
+    clear: both;
+    min-width: 560px;
+}
+div#Loading {
+    margin-top: 10px;
+    background-image: url( http://thwiki.cc/extensions/WikiEditor/modules/images/dialogs/loading.gif );
+    height: 24px;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+table.OptClass-publisher tr, table.OptClass-publisher, table.OptClass-publisher button, table.OptClass-publisher select, #OptSwitch-publisher, #OptPage-publisher, li.OptClass-publisher:hover {
+    border-color: #816C40;
+    background-color: #EAD587;
+}
+table.OptClass-release tr, table.OptClass-release, table.OptClass-release button, table.OptClass-release select, #OptSwitch-release, #OptPage-release, li.OptClass-release:hover {
+    border-color: #6F3737;
+    background-color: #E28787;
+}
+table.OptClass-content tr, table.OptClass-content, table.OptClass-content button, table.OptClass-content select, #OptSwitch-content, #OptPage-content, li.OptClass-content:hover {
+    border-color: #274E24;
+    background-color: #81E081;
+}
+table.OptClass-music tr, table.OptClass-music, table.OptClass-music button, table.OptClass-music select, #OptSwitch-music, #OptPage-music, li.OptClass-music:hover {
+    border-color: #1F4757;
+    background-color: #7EADE2;
+}
+table.OptClass-staff tr, table.OptClass-staff, table.OptClass-staff button, table.OptClass-staff select, #OptSwitch-staff, #OptPage-staff, li.OptClass-staff:hover {
+    border-color: #743574;
+    background-color: #D695D3;
+}
+li.OptClass-remove {
+    border-top: none !important;
+}
+li.OptClass-remove:hover {
+    background-color: #FFFFFF;
+}
+#OptSwitch-selected, #OptSwitch-common {
+    border-color: #C2D8E2;
+    background-color: #E5EBEE;
+}
+table.OptClass-blank {
+    display: table;
+    text-align: center;
+    font-weight: bold;
+}
+table.OptClass-blank tr, table.OptClass-blank {
+    border-color: #3A3A3A;
+    background-color: #A5A5A5;
+}
+table.OptClass-blank td:nth-child(2) {
+    color: #E42727;
+}
+table.OptClass-blank td:nth-child(4) {
+    width: 68px;
+    background-image: url( http://upload.wikimedia.org/wikipedia/commons/1/1c/Add.svg );
+    background-size: 22px;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+ul#OptSwitch {
+    list-style-type: none;
+    background-color: #C2D8E2;
+    margin: 0px;
+    padding: 4px 10px 0px 40px;
+    border-bottom: 0px;
+    white-space: nowrap;
+}
+li[id^="OptSwitch-"] {
+    display: inline;
+    margin: 0px;
+    padding: 2px 4px 3px 4px;
+}
+li.OptSwitchSelected {
+    position: relative;
+    z-index: 50;
+    font-weight: bold;
+    top: -2px;
+    padding-bottom: 5px;
+}    
+#CurOptName {
+    padding-right: 20px;
+    font-weight: bold;
+    margin-bottom: 5px;
+    text-align: center;
+}
+#CurOptName:before {
+    content: '更换项目　';
+}
+#CurOptName.New:before {
+    color: #E42727;
+    content: '新增项目';
+}
+li[id^="OptSwitch-"], #OptTitle, #MenuTitle, ol[id^="OptPage-"] li, .OptInput td:nth-child(3), .OptInput td:nth-child(4) {
+    -moz-user-select: -moz-none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+    cursor: pointer;
+}
+#PageShift {
+    background-color: #C2D8E2;
+    height: 32px;
+    margin-top: 10px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    text-align: center;
+}
+.ResultItem {
+    margin: 5px 0px;
+    width: 100%;
+    text-align: left;
+    border-collapse: collapse;
+    color: #222222;
+    background: #FFFFFF;
+}
+.ResultItem:nth-child(odd) {
+    background: #F6F8F9;
+}
+.ResultItem:nth-child(even) {
+    background: #E5EBEE
+}
+.ResultItem .head {
+    width: 100%;
+    text-indent: 10px;
+    padding: 4px 0px 1px 2px;
+    background: #EBEFF1;
+    font-size: 110%;
+    text-align: left;
+}
+.ResultItem .head>a {
+    color: #222222;
+    text-decoration: none;
+}
+.ResultItem .head>span {
+    color: #999999;
+    font-size: 80%;
+}
+.ResultItem .empt {
+    width: 20px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 120%;
+}
+.ResultItem .info {
+    padding: 4px;
+    width: 470px;
+}
+.ResultItem .more {
+    width: 40px;
+}
+.ResultItem .list {
+    border-collapse: collapse;
+    border-spacing: 0px;
+}
+.ResultItem .list th {
+    width: 65px;
+    vertical-align: top;
+    line-height: 20px;
+    height: 20px;
+    padding: 2px 5px;
+}
+.ResultItem .list td {
+    line-height: 20px;
+    vertical-align: top;
+}
+.ResultItem .list td>span {
+    white-space: nowrap;
+}
+.ResultItem .list td>span:hover {
+    border-bottom: 1px solid #d2d2d2;
+}
+span.HoverBox {
+    text-align: center;
+    padding: 0px;
+    display: none;
+    position: absolute;
+    z-index: 60;
+}
+span.HoverBox>button {
+    border: 1px solid #d2d2d2;
+    background-color: #EBEFF1;
+    background-color: #EBEFF1;
+    -moz-border-radius: 2px;
+    -webkit-border-radius: 2px;
+    border-radius: 2px;
+    padding: 0px 4px;
+    margin: 0px;
+}
+span.OptUnavailable::after {
+    float: right;
+    color: #E42727;
+}
+span.OptUnavailable::after {
+    content: '※未实装';
+}

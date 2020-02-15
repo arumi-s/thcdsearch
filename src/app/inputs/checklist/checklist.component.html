@@ -1,0 +1,33 @@
+<div class="checkbox-list">
+  <div class="custom-control custom-checkbox">
+    <input
+      type="checkbox"
+      class="custom-control-input"
+      id="{{ 'field' + id + '-_' }}"
+      [(ngModel)]="checked['_']"
+      [attr.disabled]="checked['_'] ? 'disabled' : null"
+    />
+    <label class="custom-control-label" for="{{ 'field' + id + '-_' }}">All</label>
+  </div>
+  <div
+    *ngFor="let item of option.content.list"
+    class="custom-control custom-checkbox"
+    [class.omit]="(item.omit || item.count === 0) && !checked[item.value]"
+  >
+    <input
+      type="checkbox"
+      class="custom-control-input"
+      id="{{ 'field' + id + '-' + item.value }}"
+      [(ngModel)]="checked[item.value]"
+    />
+    <label
+      class="custom-control-label"
+      [class.incompatible]="item.count === 0"
+      for="{{ 'field' + id + '-' + item.value }}"
+      >{{ item.text }}<span *ngIf="item.count" class="item-count">({{ item.count }})</span></label
+    >
+  </div>
+</div>
+<a *ngIf="hasOmit" class="moreless" href="" (click)="toggleOmit($event)">
+  {{ showOmit ? "Show less" : "Show more" }}
+</a>

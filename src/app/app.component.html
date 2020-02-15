@@ -1,0 +1,36 @@
+<div *ngIf="filterOptionsReady" class="header">
+  <div class="logo"></div>
+  <label class="matched"
+    ><svg-icon name="matched" [svgStyle]="{ 'width.px': 24 }"></svg-icon> {{ "label_matched" | i18n }}
+    {{ matchedCount | async }} / {{ results.length }}</label
+  >
+  <!--<label for="sort"> <svg-icon name="sort" [svgStyle]="{ 'width.px': 24 }"></svg-icon> Sort </label>
+  <select id="sort" [(ngModel)]="sort" class="custom-select sort-select"
+    ><ng-template ngFor let-field [ngForOf]="sortableFields"
+      ><option [value]="field[0]">{{ field[3] }} ({{ field[4] ? field[4] + " to " + field[5] : "Descending" }})</option
+      ><option [value]="'-' + field[0]"
+        >{{ field[3] }} ({{ field[4] ? field[5] + " to " + field[4] : "Ascending" }})</option
+      ></ng-template
+    ></select
+  >-->
+  <!--<label for="search"><svg-icon name="search" [svgStyle]="{ 'width.px': 24 }"></svg-icon> Search </label>-->
+  <input type="text" id="search" class="form-control" [(ngModel)]="search" />
+  <button (click)="toggleLang()">{{ translate.currentLang }}</button>
+</div>
+<div *ngIf="filterOptionsReady" class="filters">
+  <label>
+    <svg-icon name="filter" [svgStyle]="{ 'width.px': 24 }"></svg-icon> {{ "label_filters" | i18n
+    }}<span class="clear-filters" (click)="clearFilters()"
+      ><svg-icon name="clear" [svgStyle]="{ 'width.px': 24 }"></svg-icon></span
+  ></label>
+  <ng-template ngFor let-input [ngForOf]="filterService.filterOptions">
+    <filter [id]="input.id" [option]="input"></filter>
+  </ng-template>
+</div>
+<div class="results" [style.opacity]="loading ? 0.5 : 1">
+  <div class="grid" #grid>
+    <!--<ng-template ngFor let-craft [ngForOf]="crafts">
+      <craft [model]="craft"></craft>
+    </ng-template>-->
+  </div>
+</div>
