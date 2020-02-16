@@ -6,7 +6,7 @@ import { Subject, Subscription } from "rxjs";
 
 export interface ChecklistItem {
   value: string;
-  text: string;
+  text?: string;
   color?: string;
   class?: string;
   count?: number;

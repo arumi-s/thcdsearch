@@ -37,6 +37,7 @@ export class AppComponent implements OnInit {
     this.addIcon("sort");
     this.addIcon("clear");
     this.addIcon("matched");
+    this.addIcon("language");
   }
 
   addIcon(name: string) {

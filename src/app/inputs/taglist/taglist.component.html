@@ -1,7 +1,7 @@
 <ng-template #rt let-r="result" let-t="term">
-  <ngb-highlight [result]="r.text" [term]="t"></ngb-highlight>
+  <ngb-highlight [result]="r.text || r.value" [term]="t"></ngb-highlight>
 </ng-template>
-<div class="tag-input">
+<div class="tag-input" [class.loading]="loading">
   <input
     type="text"
     class="form-control"
@@ -12,6 +12,9 @@
     (selectItem)="selectItem($event)"
     [placeholder]="'search_tags' | i18n"
   />
+  <div class="spinner-border text-primary" role="status">
+    <span class="sr-only">Loading...</span>
+  </div>
 </div>
 <div class="checkbox-list">
   <div class="custom-control custom-checkbox">
@@ -39,7 +42,7 @@
       class="custom-control-label"
       [class.incompatible]="item.count === 0"
       for="{{ 'field' + id + '-' + item.value }}"
-      >{{ item.text }}<span *ngIf="item.count" class="item-count">({{ item.count }})</span></label
+      >{{ item.text || item.value }}<span *ngIf="item.count" class="item-count">({{ item.count }})</span></label
     >
   </div>
 </div>

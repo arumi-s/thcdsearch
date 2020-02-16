@@ -1,13 +1,14 @@
 import { Component, HostBinding } from "@angular/core";
 import { InputBaseComponent } from "../input.component";
 import { CraftCriteria } from "src/app/craft/craft.component";
-import { take, debounceTime, distinctUntilChanged, map } from "rxjs/operators";
+import { take, debounceTime, distinctUntilChanged, map, switchMap } from "rxjs/operators";
 import { Subject, Subscription, Observable } from "rxjs";
 import { NgbTypeaheadSelectItemEvent } from "@ng-bootstrap/ng-bootstrap";
+import { Options } from "src/app/options";
 
 export interface TaglistItem {
   value: string;
-  text: string;
+  text?: string;
   color?: string;
   class?: string;
   count?: number;
@@ -25,6 +26,8 @@ function sortCount({ count: a }: TaglistItem, { count: b }: TaglistItem) {
 })
 export class TaglistComponent extends InputBaseComponent {
   _value: Array<string> = [];
+  isStatic = true;
+  loading = false;
   checked: { [key: string]: boolean } = new Proxy(
     {},
     {
@@ -43,9 +46,14 @@ export class TaglistComponent extends InputBaseComponent {
         if (value === this._value.includes(key)) return true;
         if (value) {
           if (this.option.content.list.every(({ value: cmpKey }) => cmpKey !== key)) {
-            const item = this.option.content.tagList.find(({ value: cmpKey }) => cmpKey === key);
-            if (item != null) {
-              this.option.content.list.push(item);
+            if (this.isStatic) {
+              const item = this.option.content.tagList.find(({ value: cmpKey }) => cmpKey === key);
+              if (item != null) {
+                this.option.content.list.push(item);
+                this._value.push(key);
+              }
+            } else {
+              this.option.content.list.push({ value: key, text: key });
               this._value.push(key);
             }
           } else {
@@ -72,6 +80,9 @@ export class TaglistComponent extends InputBaseComponent {
   showOmit = false;
 
   onInit() {
+    this.isStatic = this.option.content.tagList != null || this.option.content.tagListSource == null;
+    if (this.option.content.list == null) this.option.content.list = [];
+    if (this.option.content.tagList == null) this.option.content.tagList = [];
     this.updateCountSubject.pipe(take(1)).subscribe(() => {
       this.sum = this.option.content.list.reduce((prev: number, { count }: TaglistItem) => prev + (count || 0), 0);
       let sortList: Array<TaglistItem>;
@@ -108,22 +119,48 @@ export class TaglistComponent extends InputBaseComponent {
     return text.pipe(
       debounceTime(200),
       distinctUntilChanged(),
-      map(term => {
-        if (term.length === 0) return [];
-        const segs = term
-          .split(/\s+/)
-          .filter(t => t !== "")
-          .map(t => t.toLowerCase());
-        if (segs.length === 0) return [];
-        return this.option.content.tagList
-          .filter(v => segs.every(seg => v.value.toLowerCase().indexOf(seg) > -1))
-          .slice(0, 10);
-      })
+      this.isStatic ? map(this.staticSearch) : switchMap(this.remoteSearch)
     );
   };
 
-  format(result: TaglistItem) {
-    return result.text;
+  staticSearch = (term: string) => {
+    if (term.length === 0) return [];
+    const segs = term
+      .split(/\s+/)
+      .filter(t => t !== "")
+      .map(t => t.toLowerCase());
+    if (segs.length === 0) return [];
+    return this.option.content.tagList
+      .filter(v => segs.every(seg => v.value.toLowerCase().indexOf(seg) > -1))
+      .slice(0, 10);
+  };
+  remoteSearch = (term: string) => {
+    this.loading = true;
+    return this.http
+      .get(Options.SApi, {
+        params: {
+          action: "inopt",
+          title: this.option.content.tagListSource,
+          value: term
+        },
+        responseType: "text"
+      })
+      .pipe(
+        map((result: string) => {
+          const html = new DOMParser().parseFromString(result, "text/html");
+          this.loading = false;
+          return Array.from(html.querySelectorAll("div")).map(child => {
+            return {
+              text: child.textContent,
+              value: child.getAttribute("value") || child.textContent
+            };
+          });
+        })
+      );
+  };
+
+  format(result: TaglistItem): string {
+    return result.text || result.value;
   }
 
   selectItem(event: NgbTypeaheadSelectItemEvent) {

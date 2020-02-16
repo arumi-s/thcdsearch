@@ -15,7 +15,16 @@
   >-->
   <!--<label for="search"><svg-icon name="search" [svgStyle]="{ 'width.px': 24 }"></svg-icon> Search </label>-->
   <input type="text" id="search" class="form-control" [(ngModel)]="search" />
-  <button (click)="toggleLang()">{{ translate.currentLang }}</button>
+  <div class="nav-item languages" ngbDropdown>
+    <a class="nav-link" ngbDropdownToggle id="languagePicker" role="button">
+      <svg-icon name="language" [svgStyle]="{ 'width.px': 24 }"></svg-icon>
+      {{ translate.currentLang.toUpperCase() }}
+    </a>
+    <div ngbDropdownMenu aria-labelledby="languagePicker" class="dropdown-menu dropdown-menu-right">
+      <a ngbDropdownItem (click)="translate.use('zh')">中文</a>
+      <a ngbDropdownItem (click)="translate.use('en')">ENGLISH</a>
+    </div>
+  </div>
 </div>
 <div *ngIf="filterOptionsReady" class="filters">
   <label>

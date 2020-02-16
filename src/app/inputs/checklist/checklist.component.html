@@ -7,7 +7,7 @@
       [(ngModel)]="checked['_']"
       [attr.disabled]="checked['_'] ? 'disabled' : null"
     />
-    <label class="custom-control-label" for="{{ 'field' + id + '-_' }}">All</label>
+    <label class="custom-control-label" for="{{ 'field' + id + '-_' }}">{{ "all_tags" | i18n }}</label>
   </div>
   <div
     *ngFor="let item of option.content.list"
@@ -24,7 +24,7 @@
       class="custom-control-label"
       [class.incompatible]="item.count === 0"
       for="{{ 'field' + id + '-' + item.value }}"
-      >{{ item.text }}<span *ngIf="item.count" class="item-count">({{ item.count }})</span></label
+      >{{ item.text || item.value }}<span *ngIf="item.count" class="item-count">({{ item.count }})</span></label
     >
   </div>
 </div>

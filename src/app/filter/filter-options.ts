@@ -125,7 +125,7 @@ export const filterOptions: Array<FilterOption> = [
   {
     id: "coverchar",
     type: "taglist",
-    content: { tagListSource: "封面角色建议" }
+    content: { list: stringToTaglistItem(["博丽灵梦", "雾雨魔理沙"]), tagListSource: "封面角色建议" }
   },
 
   // 设定类型为允许非的属性

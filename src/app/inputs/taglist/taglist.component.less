@@ -29,5 +29,20 @@
   margin-left: auto;
 }
 .tag-input {
+  position: relative;
   margin: 0.25em 0;
+  .spinner-border {
+    position: absolute;
+    visibility: hidden;
+    top: 50%;
+    right: 0.75rem;
+    margin-top: -0.5rem;
+    width: 1em;
+    height: 1em;
+    border-width: 0.15em;
+    pointer-events: none;
+  }
+  &.loading .spinner-border {
+    visibility: visible;
+  }
 }
