@@ -7,7 +7,6 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
-import { CraftComponent } from "./craft/craft.component";
 import { HighlightPipe } from "./pipes/highlight.pipe";
 import { InputsModule } from "./inputs/inputs.module";
 import { PipesModule } from "./pipes/pipes.module";
@@ -15,7 +14,7 @@ import { FilterComponent } from "./filter/filter.component";
 import { NgbModule, NgbRatingModule } from "@ng-bootstrap/ng-bootstrap";
 
 @NgModule({
-  declarations: [AppComponent, CraftComponent, FilterComponent, HighlightPipe],
+  declarations: [AppComponent, FilterComponent, HighlightPipe],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,

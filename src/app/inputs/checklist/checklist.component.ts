@@ -1,8 +1,8 @@
 import { Component, HostBinding } from "@angular/core";
 import { InputBaseComponent } from "../input.component";
-import { CraftCriteria } from "src/app/craft/craft.component";
 import { take } from "rxjs/operators";
 import { Subject, Subscription } from "rxjs";
+import { ItemCriteria } from "../../options";
 
 export interface ChecklistItem {
   value: string;
@@ -86,7 +86,7 @@ export class ChecklistComponent extends InputBaseComponent {
     this.filterCountSub = this.app.filterCountSubject.subscribe(countFunction => {
       this.option.content.list.forEach((item: ChecklistItem) => {
         item.count = countFunction({
-          [this.id as keyof CraftCriteria]: this.valueToCriteria([item.value.toString()])
+          [this.id as keyof ItemCriteria]: this.valueToCriteria([item.value.toString()])
         });
       });
       this.hasOmit = this.option.content.list.some((item: ChecklistItem) => item.count === 0 || item.omit);

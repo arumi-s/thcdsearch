@@ -1,28 +1,18 @@
 import { Injectable } from "@angular/core";
-import { Craft, CraftInfo, CraftCriteria, CraftField } from "../craft/craft.component";
+import { Item, ItemCriteria, ItemField } from "../options";
 import { filterOptions } from "./filter-options";
 
 @Injectable({
   providedIn: "root"
 })
 export class FilterService {
-  crafts: Array<Craft>;
-
-  criteria: CraftCriteria = {};
+  criteria: ItemCriteria = {};
 
   propSuggestion: {
-    [key in CraftField]?: Array<any>;
-  } = {};
-  infoSuggestion: {
-    [key in keyof CraftInfo]?: Array<any>;
+    [key in ItemField]?: Array<any>;
   } = {};
 
   constructor() {}
-
-  setCrafts(crafts: Array<Craft>) {
-    this.crafts = crafts;
-    this.updateOptions();
-  }
 
   updateOptions() {
     filterOptions.forEach(option => {

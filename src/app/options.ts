@@ -27,12 +27,56 @@ export interface HashMap<T> {
   [hash: string]: T;
 }
 
-export const MODE_SUFFIX = "_m";
-export const SORT_SUFFIX = "_s";
+export interface Item {
+  event: Array<string>;
+  circle: Array<string>;
+  date: Array<string>;
+  year: Array<string>;
+  rate: Array<string>;
+  number: Array<string>;
+  disc: Array<string>;
+  track: Array<string>;
+  time: Array<string>;
+  property: Array<string>;
+  style: Array<string>;
+  only: Array<string>;
+  price: Array<string>;
+  eventprice: Array<string>;
+  shopprice: Array<string>;
+  type: Array<string>;
+  ogmusic: Array<string>;
+  ogmusicno: Array<string>;
+  noth: Array<string>;
+  ogwork: Array<string>;
+  ogworkno: Array<string>;
+  original: Array<string>;
+  arrange: Array<string>;
+  vocal: Array<string>;
+  lyric: Array<string>;
+  compose: Array<string>;
+  script: Array<string>;
+  dub: Array<string>;
+  perform: Array<string>;
+  alname: Array<string>;
+  name: Array<string>;
+  discno: Array<string>;
+  trackno: Array<string>;
+  region: Array<string>;
+  establish: Array<string>;
+  work: Array<string>;
+  state: Array<string>;
+  cover: Array<string>;
+  coverchar: Array<string>;
+}
+export type ItemField = keyof Item;
+
+export type ItemCriteria = {
+  [field in ItemField]?: Array<string>;
+};
 
 export const Options = {
   // 设定主要参数
-  Api: "https://thwiki.cc/api.php", // 搜寻器Api根地址
+  Api: "https://wiki.aru.mi/api.php", // 搜寻器Api根地址
   SApi: "https://thwiki.cc/ajax.php", // 输入建议Api根地址
   CommonLimit: 12, // 设定常用项目列表内最大项目数量
   Sort: ["a", "d"], // 设定允许的排序值

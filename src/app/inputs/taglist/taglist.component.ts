@@ -1,6 +1,6 @@
 import { Component, HostBinding } from "@angular/core";
 import { InputBaseComponent } from "../input.component";
-import { CraftCriteria } from "src/app/craft/craft.component";
+import { ItemCriteria } from "../../options";
 import { take, debounceTime, distinctUntilChanged, map, switchMap } from "rxjs/operators";
 import { Subject, Subscription, Observable } from "rxjs";
 import { NgbTypeaheadSelectItemEvent } from "@ng-bootstrap/ng-bootstrap";
@@ -107,7 +107,7 @@ export class TaglistComponent extends InputBaseComponent {
     this.filterCountSub = this.app.filterCountSubject.subscribe(countFunction => {
       this.option.content.list.forEach((item: TaglistItem) => {
         item.count = countFunction({
-          [this.id as keyof CraftCriteria]: this.valueToCriteria([item.value.toString()])
+          [this.id as keyof ItemCriteria]: this.valueToCriteria([item.value.toString()])
         });
       });
       this.hasOmit = this.option.content.list.some((item: TaglistItem) => item.count === 0 || item.omit);

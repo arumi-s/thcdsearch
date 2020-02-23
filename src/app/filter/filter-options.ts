@@ -1,4 +1,4 @@
-import { FilterService } from "./filter-service.service";
+import { FilterService } from "./filter.service";
 import { InputBaseComponent } from "../inputs/input.component";
 import { ChecklistItem } from "../inputs/checklist/checklist.component";
 import { Options } from "ng5-slider";

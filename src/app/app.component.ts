@@ -2,11 +2,10 @@ import { Component, OnInit } from "@angular/core";
 import { map, distinctUntilChanged } from "rxjs/operators";
 import { Router, ActivatedRoute, Params } from "@angular/router";
 import { Observable, Subject } from "rxjs";
-import { Options } from "./options";
+import { Options, ItemCriteria, Item } from "./options";
 import { TranslationService } from "./pipes/translation.service";
 import { SvgIconRegistryService } from "angular-svg-icon";
-import { FilterService } from "./filter/filter-service.service";
-import { CraftCriteria } from "./craft/craft.component";
+import { FilterService } from "./filter/filter.service";
 
 @Component({
   selector: "thcd",
@@ -16,10 +15,10 @@ import { CraftCriteria } from "./craft/craft.component";
 export class AppComponent implements OnInit {
   loading = false;
   sort: string;
-  results: Array<any> = [];
+  result: Array<Item> = [];
 
   filterOptionsReady = false;
-  filterCountSubject = new Subject<(c: CraftCriteria) => number>();
+  filterCountSubject = new Subject<(c: ItemCriteria) => number>();
 
   /*@ViewChild("grid", { static: false, read: ElementRef })
   set gridRef(ref: ElementRef<HTMLElement>) {
@@ -46,7 +45,7 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     this.subscribeRoute();
-    this.filterService.setCrafts([]);
+    this.filterService.updateOptions();
     this.filterOptionsReady = true;
   }
 
@@ -80,6 +79,10 @@ export class AppComponent implements OnInit {
 
   clearFilters() {
     this.router.navigate([], { queryParams: { sort: this.sort } });
+  }
+
+  submit() {
+    console.log(this.filterService);
   }
 
   toggleLang() {

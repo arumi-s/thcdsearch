@@ -2,7 +2,7 @@ import { OnInit, HostBinding, OnDestroy, Component } from "@angular/core";
 import { Subscription } from "rxjs";
 import { HttpClient } from "@angular/common/http";
 import { AppComponent } from "src/app/app.component";
-import { CraftCriteria } from "../craft/craft.component";
+import { ItemCriteria } from "../options";
 import { FilterOption } from "../filter/filter-options";
 
 @Component({
@@ -24,7 +24,7 @@ export class InputBaseComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.routeSub = this.app.observeParam(this.id).subscribe(route => {
       this._value = this.routeToValue(route);
-      const key = this.id as keyof CraftCriteria;
+      const key = this.id as keyof ItemCriteria;
       this.app.filterService.criteria[key] = this.valueToCriteria(this._value);
     });
     this.onInit();
