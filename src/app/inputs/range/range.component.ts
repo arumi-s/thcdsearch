@@ -29,9 +29,10 @@ export class RangeComponent extends InputBaseComponent {
     if (start === this.option.content.min && end === this.option.content.max) return null;
     if (start === end) {
       return start === 0 ? ["=", start.toString()] : [start.toString()];
-    } else {
-      return [">=" + start, "<=" + end];
     }
+    if (start === this.option.content.min) return ["<=" + end];
+    if (end === this.option.content.max) return [">=" + start];
+    return [">=" + start, "<=" + end];
   }
 
   valueToRoute(value: [number, number]): string {

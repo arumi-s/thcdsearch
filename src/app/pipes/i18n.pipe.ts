@@ -1,7 +1,6 @@
 import { ChangeDetectorRef, Injectable, OnDestroy, Pipe, PipeTransform } from "@angular/core";
 import { Subscription } from "rxjs";
-import { HashMap } from "../options";
-import { TranslationService, I18NParameter } from "./translation.service";
+import { TranslationService, I18NParameter } from "../services/translation.service";
 
 @Injectable()
 @Pipe({

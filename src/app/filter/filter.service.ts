@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
-import { Item, ItemCriteria, ItemField } from "../options";
+import { ItemCriteria, ItemField } from "../options";
 import { filterOptions } from "./filter-options";
+import { SearchService } from "../services/search.service";
 
 @Injectable({
   providedIn: "root"
@@ -12,7 +13,7 @@ export class FilterService {
     [key in ItemField]?: Array<any>;
   } = {};
 
-  constructor() {}
+  constructor(private searchService: SearchService) {}
 
   updateOptions() {
     filterOptions.forEach(option => {
@@ -21,6 +22,13 @@ export class FilterService {
         const suggestion: Array<any> = this.propSuggestion[option.id as keyof FilterService["propSuggestion"]];
         option.init.call(this, option, suggestion || []);
       }
+    });
+  }
+
+  search(mode: number) {
+    this.searchService.search({
+      criteria: { ...this.criteria },
+      mode
     });
   }
 

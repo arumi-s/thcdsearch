@@ -147,7 +147,7 @@ export const Options = {
       ]
     ],
     ["社团", ["region", "establish", "work", "state"], ["region", "establish", "work", "state"]]
-  ],
+  ] as Array<[string, Array<string>, Array<string>]>,
 
   Inputs: [
     // 设定属性对应的类
@@ -519,7 +519,7 @@ export const Options = {
       dub: "曲目配音",
       coverchar: "封面角色"
     }
-  ],
+  ] as Array<{ [key in ItemField]: string }>,
 
   JoinConf: {
     // 设定多值属性连接符

@@ -4,6 +4,7 @@ import { HttpClientModule } from "@angular/common/http";
 import { AngularSvgIconModule } from "angular-svg-icon";
 import { NgModule } from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { CookieService } from "ngx-cookie-service";
 
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
@@ -28,7 +29,7 @@ import { NgbModule, NgbRatingModule } from "@ng-bootstrap/ng-bootstrap";
     InputsModule,
     PipesModule
   ],
-  providers: [],
+  providers: [CookieService],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

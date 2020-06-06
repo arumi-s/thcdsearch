@@ -1,7 +1,9 @@
 import { Injectable } from "@angular/core";
 import { HashMap } from "../options";
-import { of, merge, BehaviorSubject, Subject } from "rxjs";
+import { of, merge, BehaviorSubject } from "rxjs";
 import { toArray, map } from "rxjs/operators";
+import { CookieService } from "ngx-cookie-service";
+import { HttpClient } from "@angular/common/http";
 
 export class PluralStruct {
   NONE?: string;
@@ -24,17 +26,42 @@ export class TranslationService {
   defaultLang: Language = "zh";
   currentLang: Language = "zh";
   useDefaultLang = false;
+  languages: Array<Language> = ["zh", "en"];
 
   onChangeLang: BehaviorSubject<TranslationData> = new BehaviorSubject<TranslationData>({});
 
-  constructor() {
-    this.data["en"] = require("../i18n/en.json");
-    this.data["zh"] = require("../i18n/zh.json");
+  constructor(private httpService: HttpClient, private cookieService: CookieService) {
+    this.detectLanguage();
   }
 
-  use(lang: Language) {
-    this.currentLang = lang;
-    this.onChangeLang.next(this.data[lang]);
+  detectLanguage(): void {
+    if (this.cookieService.check("lang") && this.use(this.cookieService.get("lang").substr(0, 2))) return;
+    if ("languages" in navigator) {
+      for (let index = 0; index < navigator.languages.length; index++) {
+        if (this.use(navigator.languages[index].substr(0, 2))) break;
+      }
+    }
+  }
+
+  use(lang: string): boolean {
+    if (this.languages.includes(lang as Language)) {
+      this.currentLang = lang as Language;
+      this.cookieService.set("lang", this.currentLang, 30, "/", undefined, true, "Strict");
+      if (this.data[this.currentLang] == null) {
+        this.httpService
+          .get(`./assets/i18n/${this.currentLang}.json`)
+          .toPromise()
+          .then((json: HashMap<Translation>) => {
+            this.data[this.currentLang] = json;
+            this.onChangeLang.next(this.data[this.currentLang]);
+          });
+      } else {
+        this.onChangeLang.next(this.data[this.currentLang]);
+      }
+      return true;
+    } else {
+      return false;
+    }
   }
 
   interpolate(expr: Translation, params?: I18NParameter): string {
@@ -75,7 +102,11 @@ export class TranslationService {
       return expr;
     }
     if (params.length > 1) {
-      return this.strtr(expr, params.map((v, k: number) => "$" + (k + 1)).reverse(), params.map(v => v.toString()).reverse());
+      return this.strtr(
+        expr,
+        params.map((v, k: number) => "$" + (k + 1)).reverse(),
+        params.map(v => v.toString()).reverse()
+      );
     }
     const single = typeof params[0] !== "undefined" ? params[0] : "";
     return expr.replace(/\$1/g, single.toString());
@@ -181,7 +212,12 @@ export class TranslationService {
     if (translations) {
       res = this.interpolate(this.getValue(translations, key), interpolateParams);
     }
-    if (typeof res === "undefined" && this.defaultLang && this.defaultLang !== this.currentLang && this.useDefaultLang) {
+    if (
+      typeof res === "undefined" &&
+      this.defaultLang &&
+      this.defaultLang !== this.currentLang &&
+      this.useDefaultLang
+    ) {
       res = this.interpolate(this.getValue(this.data[this.defaultLang], key), interpolateParams);
     }
     if (typeof res === "undefined") {

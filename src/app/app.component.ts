@@ -3,7 +3,7 @@ import { map, distinctUntilChanged } from "rxjs/operators";
 import { Router, ActivatedRoute, Params } from "@angular/router";
 import { Observable, Subject } from "rxjs";
 import { Options, ItemCriteria, Item } from "./options";
-import { TranslationService } from "./pipes/translation.service";
+import { TranslationService } from "./services/translation.service";
 import { SvgIconRegistryService } from "angular-svg-icon";
 import { FilterService } from "./filter/filter.service";
 
@@ -20,10 +20,6 @@ export class AppComponent implements OnInit {
   filterOptionsReady = false;
   filterCountSubject = new Subject<(c: ItemCriteria) => number>();
 
-  /*@ViewChild("grid", { static: false, read: ElementRef })
-  set gridRef(ref: ElementRef<HTMLElement>) {
-    this.grid = ref.nativeElement;
-  }*/
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -81,8 +77,8 @@ export class AppComponent implements OnInit {
     this.router.navigate([], { queryParams: { sort: this.sort } });
   }
 
-  submit() {
-    console.log(this.filterService);
+  submit(mode: number) {
+    this.filterService.search(mode);
   }
 
   toggleLang() {

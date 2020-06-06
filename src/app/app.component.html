@@ -13,11 +13,11 @@
       ></ng-template
     ></select
   >-->
-  <!--<label for="search"><svg-icon name="search" [svgStyle]="{ 'width.px': 24 }"></svg-icon> Search </label>-->
+  <!--<label for="search"><svg-icon name="search" [svgStyle]="{ 'width.px': 24 }"></svg-icon> Search </label>
   <input type="text" id="search" class="form-control" [(ngModel)]="search" />
-  <button class="btn" (click)="submit()">
+  <button class="btn btn-outline-success" (click)="submit()">
     <svg-icon name="search" [svgStyle]="{ 'width.px': 24 }"></svg-icon> {{ "label_search" | i18n }}
-  </button>
+  </button>-->
   <div class="nav-item languages" ngbDropdown>
     <a class="nav-link" ngbDropdownToggle id="languagePicker" role="button">
       <svg-icon name="language" [svgStyle]="{ 'width.px': 24 }"></svg-icon>
@@ -35,6 +35,16 @@
     }}<button class=" clear-filters btn-outline-danger" (click)="clearFilters()">
       <svg-icon name="clear" [svgStyle]="{ 'width.px': 24 }"></svg-icon></button
   ></label>
+  <div class="search-submit">
+    <div class="btn-group">
+      <button class="btn btn-primary" (click)="submit(0)">
+        {{ "label_search_album" | i18n }}
+      </button>
+      <button class="btn btn-success" (click)="submit(1)">
+        {{ "label_search_track" | i18n }}
+      </button>
+    </div>
+  </div>
   <ng-template ngFor let-input [ngForOf]="filterService.filterOptions">
     <filter [id]="input.id" [option]="input"></filter>
   </ng-template>

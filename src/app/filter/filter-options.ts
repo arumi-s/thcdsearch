@@ -5,9 +5,8 @@ import { Options } from "ng5-slider";
 import { TaglistItem } from "../inputs/taglist/taglist.component";
 
 function stringToTaglistItem(list: Array<string>): Array<TaglistItem> {
-  return list.map(text => ({
-    value: text,
-    text
+  return list.map(value => ({
+    value
   }));
 }
 
@@ -36,6 +35,7 @@ export interface FilterOption {
 export const filterOptions: Array<FilterOption> = [
   {
     id: "establish",
+    collapse: true,
     type: "range",
     content: { min: 2000, max: 2020 }
   },
@@ -133,16 +133,7 @@ export const filterOptions: Array<FilterOption> = [
     id: "region",
     type: "checklist",
     content: {
-      list: [
-        { value: "日本", text: "日本" },
-        { value: "中国", text: "中国" },
-        { value: "韩国", text: "韩国" },
-        { value: "台湾", text: "台湾" },
-        { value: "美国", text: "美国" },
-        { value: "英国", text: "英国" },
-        { value: "德国", text: "德国" },
-        { value: "澳大利亚", text: "澳大利亚" }
-      ]
+      list: stringToTaglistItem(["日本", "中国", "台湾", "香港", "韩国", "美国", "英国", "德国", "加拿大"])
     }
   },
   {
@@ -182,7 +173,7 @@ export const filterOptions: Array<FilterOption> = [
     }
   },
   { id: "noth", name: "", type: "checklist", content: { list: stringToTaglistItem(["非东方"]) } },
-  { id: "original", name: "", type: "checklist", content: { list: stringToTaglistItem(["原创"]) } }
+  { id: "original", name: "", type: "checklist", content: { list: stringToTaglistItem(["原创"]) } },
 
   // 设定类型为价格的属性
   /*{ id: "price", name: "", type: "price", content: false },
@@ -197,23 +188,21 @@ export const filterOptions: Array<FilterOption> = [
       { type: "date", placeholder: "2009-01-01" },
       { type: "date", placeholder: "2010-01-01" }
     ]
-  },
+  },*/
   {
     id: "time",
     type: "range",
-    content: [
-      {
-        type: "text",
-        class: "Duration",
-        maxlength: "12",
-        placeholder: "20:00"
+    content: {
+      sliderOptions: {
+        translate: (value: number) =>
+          Math.floor(value / 60).toString() +
+          ":" +
+          Math.floor(value % 60)
+            .toString()
+            .padStart(2, "0")
       },
-      {
-        type: "text",
-        class: "Duration",
-        maxlength: "12",
-        placeholder: "40:00"
-      }
-    ]
-  },*/
+      min: 0,
+      max: 2100
+    }
+  }
 ];

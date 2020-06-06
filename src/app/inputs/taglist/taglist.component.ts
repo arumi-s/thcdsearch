@@ -8,7 +8,6 @@ import { Options } from "src/app/options";
 
 export interface TaglistItem {
   value: string;
-  text?: string;
   color?: string;
   class?: string;
   count?: number;
@@ -53,7 +52,7 @@ export class TaglistComponent extends InputBaseComponent {
                 this._value.push(key);
               }
             } else {
-              this.option.content.list.push({ value: key, text: key });
+              this.option.content.list.push({ value: key });
               this._value.push(key);
             }
           } else {
@@ -151,7 +150,6 @@ export class TaglistComponent extends InputBaseComponent {
           this.loading = false;
           return Array.from(html.querySelectorAll("div")).map(child => {
             return {
-              text: child.textContent,
               value: child.getAttribute("value") || child.textContent
             };
           });
@@ -160,7 +158,7 @@ export class TaglistComponent extends InputBaseComponent {
   };
 
   format(result: TaglistItem): string {
-    return result.text || result.value;
+    return result.value;
   }
 
   selectItem(event: NgbTypeaheadSelectItemEvent) {

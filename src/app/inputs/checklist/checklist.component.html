@@ -24,7 +24,7 @@
       class="custom-control-label"
       [class.incompatible]="item.count === 0"
       for="{{ 'field' + id + '-' + item.value }}"
-      >{{ item.text || item.value }}<span *ngIf="item.count" class="item-count">({{ item.count }})</span></label
+      >{{ item.value | i18n }}<span *ngIf="item.count" class="item-count">({{ item.count }})</span></label
     >
   </div>
 </div>

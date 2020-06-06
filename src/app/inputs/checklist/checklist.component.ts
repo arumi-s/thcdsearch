@@ -6,7 +6,6 @@ import { ItemCriteria } from "../../options";
 
 export interface ChecklistItem {
   value: string;
-  text?: string;
   color?: string;
   class?: string;
   count?: number;
