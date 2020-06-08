@@ -76,7 +76,7 @@ export type ItemCriteria = {
 
 export const Options = {
   // 设定主要参数
-  Api: "https://wiki.aru.mi/api.php", // 搜寻器Api根地址
+  Api: "https://thwiki.cc/api.php", // 搜寻器Api根地址
   SApi: "https://thwiki.cc/ajax.php", // 输入建议Api根地址
   CommonLimit: 12, // 设定常用项目列表内最大项目数量
   Sort: ["a", "d"], // 设定允许的排序值

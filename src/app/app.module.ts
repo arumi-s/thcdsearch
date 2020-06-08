@@ -21,7 +21,7 @@ import { NgbModule, NgbRatingModule } from "@ng-bootstrap/ng-bootstrap";
     BrowserAnimationsModule,
     AppRoutingModule,
     HttpClientModule,
-    AngularSvgIconModule,
+    AngularSvgIconModule.forRoot(),
     FormsModule,
     ReactiveFormsModule,
     NgbModule,
