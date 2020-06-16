@@ -6,7 +6,6 @@ import { Options, ItemCriteria, Item } from "./options";
 import { TranslationService } from "./services/translation.service";
 import { SvgIconRegistryService } from "angular-svg-icon";
 import { FilterService } from "./filter/filter.service";
-import { SearchResult } from "./apis/search/search-result";
 import { SearchRequest } from "./apis/search/search-request";
 
 @Component({
@@ -18,7 +17,6 @@ export class AppComponent implements OnInit {
   loading = false;
   sort: string;
   request: SearchRequest = null;
-  result: SearchResult = null;
   matchedCount = 0;
   search = "";
 
@@ -83,22 +81,17 @@ export class AppComponent implements OnInit {
   }
 
   async submit(mode: number) {
-    this.request = await this.filterService.createSearchRequest(mode);
-    this.result = null;
+    this.request = this.filterService.getSearchRequest();
+    console.log(this.request);
+    if (this.request) {
+      await this.request.getCount();
+    }
     this.onScroll();
   }
 
   async onScroll() {
-    if (this.request == null || !this.request.more) return;
-    const next = await this.filterService.next(this.request);
-    console.log(next);
-    if (next != null) {
-      if (this.result == null) {
-        this.result = next;
-      } else {
-        this.result.count += next.count;
-        this.result.results.push(...next.results);
-      }
+    if (this.request != null) {
+      await this.request.getNext();
     }
   }
 

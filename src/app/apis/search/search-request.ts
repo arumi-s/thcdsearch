@@ -1,61 +1,84 @@
-import { ItemCriteria, Options } from "../../options";
-
-export interface SearchParam {
-  criteria: ItemCriteria;
-  mode: number;
-}
+import { ItemCriteria, Options, Item } from "../../options";
+import { CountResponse } from "./count-response";
+import { QueryResponse } from "./query-response";
 
 export class SearchRequest {
-  criteria: ItemCriteria = {};
+  results: Array<Item> = [];
+  private valid = false;
   hash = "";
-  total = -1;
-  token = "";
+  count = 0;
   limit = 50;
   offset = 0;
   more = true;
-  private valid = false;
+  lock = false;
 
-  constructor({ criteria }: SearchParam) {
-    this.criteria = {
+  static newFromCriterion(criterion: ItemCriteria) {
+    const criteria = {
       ...Options.ExtraCriteria
     };
     let fieldName: keyof ItemCriteria;
     let fieldCount = 0;
-    for (fieldName in criteria) {
-      if (criteria.hasOwnProperty(fieldName)) {
-        const field = criteria[fieldName];
+    for (fieldName in criterion) {
+      if (criterion.hasOwnProperty(fieldName)) {
+        const field = criterion[fieldName];
         if (field != null && field.length > 0) {
-          this.criteria[fieldName] = field;
+          criteria[fieldName] = field;
           ++fieldCount;
         }
       }
     }
     if (fieldCount > 0) {
-      this.total = 0;
-      this.hash = "";
-      //this.quer + "|" + this.reqs + "|" + this.pred + "|" + this.sort + "|" + this.orde + "|limit=" + this.limit;
-      this.valid = true;
+      return new SearchRequest(criteria);
     } else {
+      return null;
+    }
+  }
+
+  constructor(public criteria: ItemCriteria) {}
+
+  async getCount() {
+    if (this.lock) return;
+    this.lock = true;
+    try {
+      const result: CountResponse = await (
+        await fetch(this.getApiUrl(`/count`), { method: "POST", body: JSON.stringify(this.criteria) })
+      ).json();
+      this.count = result.count;
+      this.hash = result.hash;
+      this.valid = true;
+    } catch (e) {
+      console.log(e);
       this.valid = false;
     }
+    this.lock = false;
+  }
+
+  async getNext() {
+    if (this.lock || !this.valid || !this.more || this.offset >= this.count) return;
+    this.lock = true;
+    try {
+      const response = await this.getResult(this.limit, this.offset);
+      this.offset += this.limit;
+      this.more = response.more;
+      this.lock = false;
+      this.results.push(...response.results);
+    } catch (e) {
+      this.lock = false;
+      console.log(e);
+    }
+  }
+
+  async getResult(limit = 50, offset = 0) {
+    return await (
+      await fetch(this.getApiUrl(`/query/${limit}/${offset}`), { method: "POST", body: JSON.stringify(this.criteria) })
+    ).json();
+  }
+
+  getApiUrl(endpoint: string) {
+    return `${Options.Api}${endpoint}?origin=${encodeURIComponent(location.origin).replace(/\./g, "%2E")}`;
   }
 
   isValid() {
     return this.valid;
   }
-
-  /*
-  getFullQuery() {
-    return {
-      action: "uask",
-      pre: this.pred,
-      query: this.quer,
-      result: this.reqs,
-      token: this.toke,
-      sort: this.sort,
-      order: this.orde,
-      limit: this.perp,
-      offset: 0
-    };
-  }*/
 }

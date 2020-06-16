@@ -2,7 +2,7 @@
   <div class="logo"></div>
   <label class="matched"
     ><svg-icon name="matched" [svgStyle]="{ 'width.px': 24 }"></svg-icon> {{ "label_matched" | i18n }}
-    {{ matchedCount }} / {{ result?.results?.length || 0 }}</label
+    {{ matchedCount }} / {{ request?.results?.length || 0 }}</label
   >
   <!--<label for="sort"> <svg-icon name="sort" [svgStyle]="{ 'width.px': 24 }"></svg-icon> Sort </label>
   <select id="sort" [(ngModel)]="sort" class="custom-select sort-select"
@@ -52,7 +52,7 @@
   (scrolled)="onScroll()"
 >
   <!--<pre>{{ filterService.criteria | json }}</pre>-->
-  <ng-container *ngIf="result">
-    <ng-template ngFor let-item [ngForOf]="result.results"><item [item]="item"></item></ng-template
+  <ng-container *ngIf="request">
+    <ng-template ngFor let-item [ngForOf]="request.results"><item [item]="item"></item></ng-template
   ></ng-container>
 </div>

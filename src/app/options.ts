@@ -88,7 +88,7 @@ export type ItemCriteria = {
 
 export namespace Options {
   // 设定主要参数
-  export const QueryApi = "https://thwiki.cc/rest/asktrack/v0/query"; // 搜寻器Api地址
+  export const Api = "https://thwiki.cc/rest/asktrack/v0"; // 搜寻器Api地址
   export const SuggestApi = "https://thwiki.cc/ajax.php"; // 输入建议Api根地址
   export const Sort = ["a", "d"]; // 设定允许的排序值
   export const Currency = ["日元", "人民币", "韩圆", "新台币", "港币", "美元", "港元", "英镑", "波兰兹罗提"]; // 设定可选取的货币列表

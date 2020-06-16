@@ -1,6 +1,6 @@
 import { Item } from "../../options";
 
-export interface SearchResponse {
+export interface QueryResponse {
   count: number;
   hash: string;
   more: boolean;

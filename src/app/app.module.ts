@@ -1,6 +1,5 @@
 import { BrowserModule } from "@angular/platform-browser";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import { HttpClientModule } from "@angular/common/http";
 import { AngularSvgIconModule } from "angular-svg-icon";
 import { NgModule } from "@angular/core";
 import { InfiniteScrollModule } from "ngx-infinite-scroll";
@@ -23,7 +22,6 @@ import { ItemComponent } from "./item/item.component";
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
-    HttpClientModule,
     LazyLoadImageModule,
     InfiniteScrollModule,
     AngularSvgIconModule.forRoot(),
