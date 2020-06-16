@@ -4,7 +4,7 @@ import { ItemCriteria } from "../../options";
 import { take, debounceTime, distinctUntilChanged, map, switchMap } from "rxjs/operators";
 import { Subject, Subscription, Observable } from "rxjs";
 import { NgbTypeaheadSelectItemEvent } from "@ng-bootstrap/ng-bootstrap";
-import { Options } from "src/app/options";
+import { Options } from "../../options";
 
 export interface TaglistItem {
   value: string;
@@ -136,7 +136,7 @@ export class TaglistComponent extends InputBaseComponent {
   remoteSearch = (term: string) => {
     this.loading = true;
     return this.http
-      .get(Options.SApi, {
+      .get(Options.SuggestApi, {
         params: {
           action: "inopt",
           title: this.option.content.tagListSource,

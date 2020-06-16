@@ -1,0 +1,30 @@
+:host {
+  display: grid;
+  grid-template-columns: 1fr 200px;
+  grid-template-rows: auto minmax(200px, auto);
+  grid-template-areas: "head head" "body image";
+  margin: 10px 0;
+  border: 1px solid #e8e8e8;
+}
+
+.head {
+  grid-area: head;
+  background-color: #e8e8e8;
+  padding: 0.2em 0.5em;
+}
+
+.body {
+  grid-area: body;
+  padding-left: 2em;
+}
+
+.image {
+  grid-area: image;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  justify-content: center;
+  img {
+    margin: auto;
+  }
+}

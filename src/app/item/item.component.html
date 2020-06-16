@@ -1,0 +1,15 @@
+<div class="head">
+  <span class="name">
+    <a [href]="item.self.fullurl" target="_blank">{{ item.name[0] }}</a></span
+  >&nbsp;
+  <span *ngIf="item.time && item.time.length" class="time">[{{ item.time[0] }}]</span>
+</div>
+<div class="body">
+  <div *ngIf="item.alname && item.alname.length">
+    {{ item.alname[0] }} <span *ngIf="item.date && item.date.length">({{ item.date[0] }})</span>
+  </div>
+  <div *ngIf="item.circle && item.circle.length">{{ "circle" | i18n }}: {{ printWpgValues(item.circle) }}</div>
+</div>
+<div class="image">
+  <img *ngIf="item.cover && item.cover.length" [lazyLoad]="item.cover[0].fullurl" />
+</div>

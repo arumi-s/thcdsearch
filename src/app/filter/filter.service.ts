@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import { ItemCriteria, ItemField } from "../options";
 import { filterOptions } from "./filter-options";
 import { SearchService } from "../services/search.service";
+import { SearchRequest } from "../apis/search/search-request";
 
 @Injectable({
   providedIn: "root"
@@ -25,11 +26,15 @@ export class FilterService {
     });
   }
 
-  search(mode: number) {
-    this.searchService.search({
+  createSearchRequest(mode: number) {
+    return this.searchService.createSearchRequest({
       criteria: { ...this.criteria },
       mode
     });
+  }
+
+  next(request: SearchRequest) {
+    return this.searchService.next(request);
   }
 
   get filterOptions() {

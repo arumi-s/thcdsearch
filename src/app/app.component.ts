@@ -6,6 +6,8 @@ import { Options, ItemCriteria, Item } from "./options";
 import { TranslationService } from "./services/translation.service";
 import { SvgIconRegistryService } from "angular-svg-icon";
 import { FilterService } from "./filter/filter.service";
+import { SearchResult } from "./apis/search/search-result";
+import { SearchRequest } from "./apis/search/search-request";
 
 @Component({
   selector: "thcd",
@@ -15,7 +17,10 @@ import { FilterService } from "./filter/filter.service";
 export class AppComponent implements OnInit {
   loading = false;
   sort: string;
-  result: Array<Item> = [];
+  request: SearchRequest = null;
+  result: SearchResult = null;
+  matchedCount = 0;
+  search = "";
 
   filterOptionsReady = false;
   filterCountSubject = new Subject<(c: ItemCriteria) => number>();
@@ -77,8 +82,24 @@ export class AppComponent implements OnInit {
     this.router.navigate([], { queryParams: { sort: this.sort } });
   }
 
-  submit(mode: number) {
-    this.filterService.search(mode);
+  async submit(mode: number) {
+    this.request = await this.filterService.createSearchRequest(mode);
+    this.result = null;
+    this.onScroll();
+  }
+
+  async onScroll() {
+    if (this.request == null || !this.request.more) return;
+    const next = await this.filterService.next(this.request);
+    console.log(next);
+    if (next != null) {
+      if (this.result == null) {
+        this.result = next;
+      } else {
+        this.result.count += next.count;
+        this.result.results.push(...next.results);
+      }
+    }
   }
 
   toggleLang() {

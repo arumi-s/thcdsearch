@@ -1,7 +1,7 @@
 import { OnInit, HostBinding, OnDestroy, Component } from "@angular/core";
 import { Subscription } from "rxjs";
 import { HttpClient } from "@angular/common/http";
-import { AppComponent } from "src/app/app.component";
+import { AppComponent } from "../app.component";
 import { ItemCriteria } from "../options";
 import { FilterOption } from "../filter/filter-options";
 
